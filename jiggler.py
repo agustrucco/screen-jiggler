@@ -8,7 +8,7 @@ import pystray
 from PIL import Image, ImageDraw
 
 INTERVAL_SECONDS = 60
-SHUTDOWN_HOUR = 18  # 6pm
+SHUTDOWN_HOUR = 18  # auto-stop at 6 pm
 
 ES_CONTINUOUS = 0x80000000
 ES_SYSTEM_REQUIRED = 0x00000001
@@ -65,7 +65,7 @@ def toggle(icon_ref, item):
     active = not active
     set_awake(active)
     icon_ref.icon = create_icon((46, 204, 113) if active else (231, 76, 60))
-    icon_ref.title = f"Teams Jiggler — {'Activo' if active else 'Pausado'}"
+    icon_ref.title = f"Screen Jiggler — {'Active' if active else 'Paused'}"
 
 
 def quit_app(icon_ref, item):
@@ -79,11 +79,11 @@ set_awake(True)
 threading.Thread(target=jiggle_loop, daemon=True).start()
 threading.Thread(target=auto_shutdown_loop, daemon=True).start()
 
-icon = pystray.Icon("teams_jiggler")
+icon = pystray.Icon("screen_jiggler")
 icon.icon = create_icon((46, 204, 113))
-icon.title = "Teams Jiggler — Activo (se apaga a las 18:00)"
+icon.title = f"Screen Jiggler — Active (auto-stop at {SHUTDOWN_HOUR}:00)"
 icon.menu = pystray.Menu(
-    pystray.MenuItem("Activar / Pausar", toggle),
-    pystray.MenuItem("Salir", quit_app),
+    pystray.MenuItem("Toggle (Active / Paused)", toggle),
+    pystray.MenuItem("Quit", quit_app),
 )
 icon.run()
