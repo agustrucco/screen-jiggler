@@ -14,7 +14,7 @@ a = Analysis(
     noarchive=False,
     optimize=0,
 )
-pyz = PYZ(a.pure)
+pyz = PYB(a.pure)
 
 exe = EXE(
     pyz,
@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='TeamsJiggler',
+    name='ScreenJiggler',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
